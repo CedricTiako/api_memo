@@ -4,10 +4,12 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose');
 const memosController = require('./memoController')
 const path = require('path');
+const cors = require('cors')
 
 const app = express();
 dotenv.config()
 
+app.use(cors())
 
 // Configure bodyparser to handle post requests
 app.use(express.urlencoded({
@@ -17,20 +19,9 @@ app.use(express.json());
 
 app.use(fileUpload());
 
-
-app.post('/multiplefields',(req,res) => {
-    console.log(req.files.my_profile_pic.name);
-    console.log(req.files.my_pet.name);
-    console.log(req.files.my_cover_photo.name);
-})
-
-
-
-
 // Connect to Mongoose and set connection variable
 // Deprecated: mongoose.connect('mongodb://localhost/resthub');
 mongoose.connect(process.env.MONGODB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true}, () => console.log("Connecter a la bd Memo"));
-
 
 
 // Configuration du port du serveur 
